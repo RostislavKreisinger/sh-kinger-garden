@@ -23,6 +23,15 @@ services:
                 local: '@local_filesystem'
                 main: '@main_filesystem'
 
+    Shopsys\ShopBundle\Model\AdvancedSearch\Filter\:
+        resource: '../../Model/AdvancedSearch/Filter/*Filter.php'
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig:
+        class: Shopsys\ShopBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig
+
+    Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchProductFilterTranslation:
+        class: Shopsys\ShopBundle\Model\AdvancedSearch\AdvancedSearchProductFilterTranslation
+
     Shopsys\ShopBundle\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface: '@Shopsys\ShopBundle\Form\Front\Order\DomainAwareOrderFlowFactory'

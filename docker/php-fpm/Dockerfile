@@ -57,6 +57,8 @@ RUN docker-php-ext-install \
     pdo_pgsql \
     zip
 
+RUN npm install -g npm@6.13.2
+
 # install grunt cli used by frontend developers for continuous generating of css files
 RUN npm install -g grunt-cli
 
