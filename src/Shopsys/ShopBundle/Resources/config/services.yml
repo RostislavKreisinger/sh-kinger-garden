@@ -23,6 +23,10 @@ services:
                 local: '@local_filesystem'
                 main: '@main_filesystem'
 
+
+    Shopsys\FrameworkBundle\Controller\Admin\ArticleController:
+        class: Shopsys\ShopBundle\Controller\Admin\ArticleController
+
     Shopsys\ShopBundle\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface: '@Shopsys\ShopBundle\Form\Front\Order\DomainAwareOrderFlowFactory'

@@ -6,7 +6,9 @@ namespace Shopsys\ShopBundle\Form\Admin;
 
 use Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
+use Shopsys\ShopBundle\Model\Article\Article;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints;
 
@@ -25,7 +27,32 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
             ],
             'label' => 'Creation date',
         ]);
+
+        $this->extendPlacement($builderArticleDataGroup);
+
         $builder->add($builderArticleDataGroup);
+    }
+
+    /**
+     * @param FormBuilderInterface $builderArticleDataGroup
+     */
+    private function extendPlacement(FormBuilderInterface $builderArticleDataGroup): void {
+
+        $builderArticleDataGroup->add('placement', ChoiceType::class, [
+            'required' => true,
+            'choices' => [
+                t('homepage') => Article::PLACEMENT_HOMEPAGE,
+                t('in upper menu') => Article::PLACEMENT_TOP_MENU,
+                t('in footer') => Article::PLACEMENT_FOOTER,
+                t('without positioning') => Article::PLACEMENT_NONE,
+            ],
+            'placeholder' => t('-- Choose article position --'),
+            'constraints' => [
+                new Constraints\NotBlank(['message' => 'Please choose article placement']),
+            ],
+            'label' => t('Location'),
+        ]);
+
     }
 
     /**
