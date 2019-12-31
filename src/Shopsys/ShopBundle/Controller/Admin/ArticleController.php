@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Shopsys\ShopBundle\Controller\Admin;
@@ -28,6 +29,4 @@ class ArticleController extends ArticleControllerAdmin
             'articlesCountOnSelectedDomain' => $articlesCountOnSelectedDomain,
         ]);
     }
-
-
 }

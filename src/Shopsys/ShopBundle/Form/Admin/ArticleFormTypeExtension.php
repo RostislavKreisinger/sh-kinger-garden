@@ -34,10 +34,10 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @param FormBuilderInterface $builderArticleDataGroup
+     * @param \Symfony\Component\Form\FormBuilderInterface $builderArticleDataGroup
      */
-    private function extendPlacement(FormBuilderInterface $builderArticleDataGroup): void {
-
+    private function extendPlacement(FormBuilderInterface $builderArticleDataGroup): void
+    {
         $builderArticleDataGroup->add('placement', ChoiceType::class, [
             'required' => true,
             'choices' => [
@@ -52,7 +52,6 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
             ],
             'label' => t('Location'),
         ]);
-
     }
 
     /**

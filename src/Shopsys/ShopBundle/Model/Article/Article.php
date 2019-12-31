@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleData as BaseArticleData;
  */
 class Article extends BaseArticle
 {
-
     public const PLACEMENT_HOMEPAGE = 'homepage';
 
     /**
