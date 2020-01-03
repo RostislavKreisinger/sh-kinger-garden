@@ -141,3 +141,7 @@ front_login_window_form:
     path: /login/form
     defaults: { _controller: ShopsysShopBundle:Front\Login:windowForm }
     methods: [POST]
+
+front_article_list:
+    path: /articles
+    defaults: { _controller: ShopsysShopBundle:Front\Article:index }

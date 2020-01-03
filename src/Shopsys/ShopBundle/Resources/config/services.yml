@@ -33,6 +33,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface: '@Shopsys\ShopBundle\Model\Article\ArticleDataFactory'
 
+    Shopsys\FrameworkBundle\Model\Article\ArticleFacade:
+        class: Shopsys\ShopBundle\Model\Article\ArticleFacade
+
     Shopsys\ShopBundle\Model\Category\CurrentCategoryResolver: ~
 
     League\Flysystem\FilesystemInterface: '@main_filesystem'
@@ -102,3 +105,5 @@ services:
     Shopsys\ShopBundle\DataFixtures\Demo\UserDataFixtureLoader:
         arguments:
             - '%shopsys.data_fixtures.resource_customers_filepath%'
+
+    Shopsys\ShopBundle\Grid\Article\ArticleGridFactory: ~

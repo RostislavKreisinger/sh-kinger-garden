@@ -1,0 +1,17 @@
+{% extends '@ShopsysShop/Front/Layout/layout.html.twig' %}
+{% import '@ShopsysShop/Front/Inline/Paginator/paginator.html.twig' as paginator %}
+
+{% block title %}
+    {{ 'Articles'|trans }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ 'Articles'|trans }}</h1>
+
+    {% if articleGridView is not empty %}
+        <div id="list-articles">
+            {{ articleGridView.render() }}
+        </div>
+    {% endif %}
+
+{% endblock %}

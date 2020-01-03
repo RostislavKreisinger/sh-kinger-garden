@@ -1,0 +1,26 @@
+{% extends '@ShopsysShop/Front/Layout/layout.html.twig' %}
+{% import '@ShopsysShop/Front/Inline/Paginator/paginator.html.twig' as paginator %}
+
+{% block title %}
+    {{ 'Articles'|trans }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ 'Articles'|trans }}</h1>
+
+    {% if articlesPaginator.results|length > 0 %}
+        {% set entityName = 'articles'|trans %}
+        {{ paginator.paginatorNavigation(articlesPaginator, entityName) }}
+
+        {% for article in articlesPaginator.results %}
+            <div class="box-article__item">
+                <a href = "{{ url( 'front_article_detail', {id:article.id} ) }}">{{ article.name }}</a>
+                <div>{{ article.text|striptags|slice(0,200) }}</div>
+            </div>
+        {% endfor %}
+
+        {{ paginator.paginatorNavigation(articlesPaginator, entityName) }}
+
+    {% endif %}
+
+{% endblock %}

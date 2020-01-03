@@ -1,0 +1,5 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_text %}
+    {{ value|striptags|slice(0,200) }}
+{% endblock %}
