@@ -29,6 +29,11 @@ class ImportEurCronModule implements SimpleCronModuleInterface
     protected $entityManager;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
      * ImportEurCronModule constructor.
      * @param CurrencyFacade $currencyFacade
      * @param EntityManagerInterface $entityManager
@@ -42,25 +47,19 @@ class ImportEurCronModule implements SimpleCronModuleInterface
      * @param Logger $logger
      */
     public function setLogger(Logger $logger){
-
-        // TODO: Implement setLogger() method.
+        $this->logger = $logger;
     }
 
     public function run(){
-
-        foreach ($this->loadRows() as $row){
+        foreach ($this->prepareRows() as $row){
             if(strpos($row, 'EMU|') !== false){
-
                 $importedCurrencyRate = explode('|', $row);
-
                 $currencyData = $this->buildCurrencyData($importedCurrencyRate);
                 if($currencyData instanceof CurrencyData){
-
                     $this->saveNewCurrencyRate(
                         $currencyData,
                         $this->getEurCurrencyId()
                     );
-
                 }
             }
         }
@@ -75,6 +74,7 @@ class ImportEurCronModule implements SimpleCronModuleInterface
                 return $currency->getId();
             }
         }
+        $this->logger->addError('Missing EUR currency row!');
         return null;
     }
 
@@ -85,14 +85,14 @@ class ImportEurCronModule implements SimpleCronModuleInterface
     protected function buildCurrencyData(array $importedCurrencyRate):?CurrencyData{
 
         if(empty($importedCurrencyRate[1]) || empty($importedCurrencyRate[3] || empty($importedCurrencyRate[4]))){
-            //log
+            $this->logger->addError('Invalid row data!');
             return null;
         }
 
         $currencyData = new CurrencyData();
         $currencyData->name = $importedCurrencyRate[1];
         $currencyData->code = $importedCurrencyRate[3];
-        $currencyData->exchangeRate = $importedCurrencyRate[4];
+        $currencyData->exchangeRate = str_replace(',', '.', $importedCurrencyRate[4]);
 
         return $currencyData;
     }
@@ -108,17 +108,32 @@ class ImportEurCronModule implements SimpleCronModuleInterface
         }else{
             $this->currencyFacade->edit($eurCurrencyId, $currencyData);
         }
+        $this->logger->addInfo('New EUR rate is '. $currencyData->exchangeRate .' (' .$this->getTodayDate(). ')');
         $this->entityManager->commit();
     }
 
     /**
      * @return array
      */
-    protected function loadRows():array {
-        $date = date('d.m.Y');
-        $url = str_replace(self::DATE_PLACEHOLDER, $date, self::CURRENCY_CNB_URL);
-        $result = file_get_contents($url);
-        return explode('\n', $result);
+    protected function prepareRows():array {
+        $result = $this->loadData();
+        return explode(PHP_EOL, $result);
+    }
+
+    /**
+     * @return string
+     */
+    protected function loadData():string{
+
+        $url = str_replace(self::DATE_PLACEHOLDER, $this->getTodayDate(), self::CURRENCY_CNB_URL);
+        return file_get_contents($url);
+    }
+
+    /**
+     * @return string
+     */
+    private function getTodayDate():string {
+        return date('d.m.Y');
     }
 
 
