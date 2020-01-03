@@ -8,3 +8,7 @@ services:
 #   Shopsys\FrameworkBundle\Model\Product\Search\Export\ProductSearchExportCronModule:
 #       tags:
 #           - { name: shopsys.cron, hours: '*', minutes: '*' }
+
+    Shopsys\ShopBundle\Model\Currency\ImportEurCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '*/8', minutes: '*' }

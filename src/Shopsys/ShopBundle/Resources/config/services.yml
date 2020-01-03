@@ -1,4 +1,5 @@
 imports:
+    - { resource: cron.yml }
     - { resource: forms.yml }
     - { resource: services/*.yml }
 
