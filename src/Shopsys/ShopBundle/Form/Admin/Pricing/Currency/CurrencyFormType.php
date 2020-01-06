@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace Shopsys\ShopBundle\Form\Admin\Pricing\Currency;
 
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
@@ -15,29 +14,33 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CurrencyFormType extends CurrencyFormTypeFramework
 {
-
     /**
      * CurrencyFormType constructor.
-     * @param CurrencyRepositoryInterface $intlCurrencyRepository
-     * @param Localization $localization
+     * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
-    public function __construct(CurrencyRepositoryInterface $intlCurrencyRepository, Localization $localization){
+    public function __construct(CurrencyRepositoryInterface $intlCurrencyRepository, Localization $localization)
+    {
         parent::__construct($intlCurrencyRepository, $localization);
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options){
-
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         parent::buildForm($builder, $options);
 
         $this->setupExchangeBuilder($builder, $options);
     }
 
-    protected function setupExchangeBuilder(FormBuilderInterface $builder, array $options){
-
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     */
+    protected function setupExchangeBuilder(FormBuilderInterface $builder, array $options)
+    {
         $builder->add('exchangeRate', NumberType::class, [
             'disabled' => true,
             'scale' => 6,
@@ -49,7 +52,5 @@ class CurrencyFormType extends CurrencyFormTypeFramework
                 new GreaterThan(0),
             ],
         ]);
-
     }
-
 }
