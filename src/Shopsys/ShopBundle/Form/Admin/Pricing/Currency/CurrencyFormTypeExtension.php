@@ -4,25 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\ShopBundle\Form\Admin\Pricing\Currency;
 
-use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
 use PHPUnit\Framework\Constraint\GreaterThan;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency\CurrencyFormType as CurrencyFormTypeFramework;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CurrencyFormType extends CurrencyFormTypeFramework
+class CurrencyFormTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * CurrencyFormType constructor.
-     * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
-    public function __construct(CurrencyRepositoryInterface $intlCurrencyRepository, Localization $localization)
-    {
-        parent::__construct($intlCurrencyRepository, $localization);
-    }
+
+
+
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -30,9 +23,9 @@ class CurrencyFormType extends CurrencyFormTypeFramework
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
 
         $this->setupExchangeBuilder($builder, $options);
+
     }
 
     /**
@@ -41,6 +34,8 @@ class CurrencyFormType extends CurrencyFormTypeFramework
      */
     protected function setupExchangeBuilder(FormBuilderInterface $builder, array $options)
     {
+
+
         $builder->add('exchangeRate', NumberType::class, [
             'disabled' => true,
             'scale' => 6,
@@ -52,5 +47,9 @@ class CurrencyFormType extends CurrencyFormTypeFramework
                 new GreaterThan(0),
             ],
         ]);
+    }
+
+    public function getExtendedType(){
+        return CurrencyFormTypeFramework::class;
     }
 }

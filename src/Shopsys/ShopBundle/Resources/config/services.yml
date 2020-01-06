@@ -99,6 +99,3 @@ services:
     Shopsys\ShopBundle\DataFixtures\Demo\UserDataFixtureLoader:
         arguments:
             - '%shopsys.data_fixtures.resource_customers_filepath%'
-
-    Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency\CurrencyFormType:
-        class: Shopsys\ShopBundle\Form\Admin\Pricing\Currency\CurrencyFormType
